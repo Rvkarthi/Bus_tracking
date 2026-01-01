@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { api } from '../context';
 
 const DriverLogin = () => {
     const [username, setUsername] = useState('');
@@ -10,7 +11,7 @@ const DriverLogin = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:5000/api/driver/login', { username, password });
+            const res = await axios.post(api + '/api/driver/login', { username, password });
             // Store driver info in session storage or state - keeping in localStorage for persistence
             localStorage.setItem('driver', JSON.stringify(res.data));
             navigate('/driver/dashboard');

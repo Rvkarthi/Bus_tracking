@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { api } from '../context';
 
 const AdminSetup = () => {
     // State
@@ -26,7 +27,7 @@ const AdminSetup = () => {
     const fetchOrgs = async () => {
         try {
             setLoading(true);
-            const res = await axios.get('http://localhost:5000/api/traveler/organizations');
+            const res = await axios.get(api+'/api/traveler/organizations');
             setOrgs(res.data);
             // If currently selected org is deleted or not in list, deselect
             if (selectedOrg && !res.data.find(o => o._id === selectedOrg._id)) {
@@ -39,7 +40,7 @@ const AdminSetup = () => {
     // Fetch Buses
     const fetchBuses = async (orgId) => {
         try {
-            const res = await axios.get(`http://localhost:5000/api/admin/buses/${orgId}`);
+            const res = await axios.get(`${api}/api/admin/buses/${orgId}`);
             setBuses(res.data);
         } catch (err) { console.error(err); }
     };
@@ -53,7 +54,7 @@ const AdminSetup = () => {
     const handleCreateOrg = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:5000/api/admin/organization', { name: orgName });
+            const res = await axios.post(api + '/api/admin/organization', { name: orgName });
             setOrgs([...orgs, res.data]);
             setSelectedOrg(res.data);
             fetchBuses(res.data._id); // Clear buses
@@ -66,7 +67,7 @@ const AdminSetup = () => {
         e.stopPropagation();
         if (!confirm('DANGER: This will delete the Organization and ALL its BUSES/DRIVERS. Continue?')) return;
         try {
-            await axios.delete(`http://localhost:5000/api/admin/organization/${orgId}`);
+            await axios.delete(`${api}/api/admin/organization/${orgId}`);
             if (selectedOrg?._id === orgId) {
                 setSelectedOrg(null);
                 setBuses([]);
@@ -79,7 +80,7 @@ const AdminSetup = () => {
         e.preventDefault();
         if (!selectedOrg) return;
         try {
-            const res = await axios.post('http://localhost:5000/api/admin/bus', {
+            const res = await axios.post(api+'/api/admin/bus', {
                 name: busName,
                 number: busNumber,
                 organizationId: selectedOrg._id
@@ -102,7 +103,7 @@ const AdminSetup = () => {
     const handleDeleteBus = async (busId) => {
         if (!confirm('Are you sure? This will delete the bus and its driver.')) return;
         try {
-            await axios.delete(`http://localhost:5000/api/admin/bus/${busId}`);
+            await axios.delete(`${api}/api/admin/bus/${busId}`);
             fetchBuses(selectedOrg._id);
         } catch (err) { alert('Error deleting bus'); }
     }

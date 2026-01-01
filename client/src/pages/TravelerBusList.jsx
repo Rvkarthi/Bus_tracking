@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { api } from '../context';
 
 const TravelerBusList = () => {
     const [buses, setBuses] = useState([]);
@@ -16,7 +17,7 @@ const TravelerBusList = () => {
 
         const fetchBuses = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/traveler/buses/${parsedOrg._id}`);
+                const res = await axios.get(`${api}/api/traveler/buses/${parsedOrg._id}`);
                 setBuses(res.data);
             } catch (err) {
                 console.error(err);

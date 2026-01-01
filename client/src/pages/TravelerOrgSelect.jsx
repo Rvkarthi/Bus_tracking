@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { api } from '../context';
 import { useNavigate } from 'react-router-dom';
 
 const TravelerOrgSelect = () => {
@@ -15,7 +16,7 @@ const TravelerOrgSelect = () => {
 
         const fetchOrgs = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/traveler/organizations');
+                const res = await axios.get(api + '/api/traveler/organizations');
                 setOrgs(res.data);
             } catch (err) {
                 console.error(err);
