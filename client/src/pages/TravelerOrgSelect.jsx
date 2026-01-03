@@ -32,6 +32,13 @@ const TravelerOrgSelect = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 p-6">
+             {/* Back / Home button */}
+            <button
+                onClick={() => navigate('/')}
+                className="mb-4 text-sm font-medium text-gray-600 hover:text-gray-900 flex items-center gap-1"
+            >
+                ← Return to Home
+            </button>
             <h2 className="text-2xl font-bold text-brand-900 mb-6">Select Organization</h2>
             <div className="space-y-4">
                 {orgs.map(org => (
