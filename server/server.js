@@ -25,6 +25,7 @@ mongoose.connect(process.env.MONGO_URI)
 
 // Routes
 app.use('/api/admin', require('./routes/admin'));
+app.use('/api/organization', require('./routes/organization'));
 app.use('/api/driver', require('./routes/driver'));
 app.use('/api/traveler', require('./routes/traveler'));
 

@@ -4,6 +4,10 @@ const Driver = require('../models/Driver');
 const Bus = require('../models/Bus');
 
 // Driver Login
+// https://bus-tracking-d9kv.onrender.com/api/driver/login
+// {
+//     username, password
+// }
 router.post('/login', async (req, res) => {
     const { username, password } = req.body;
     try {
